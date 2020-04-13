@@ -20,7 +20,8 @@ public class OrderedArrayTester {
 		System.out.println("\n");
 		
 		System.out.println("Remove Process:");
-		oarq.removeProcess("P1");
+		System.out.println("Removing P1: " + oarq.removeProcess("P1"));
+		System.out.println("Removing P10: " + oarq.removeProcess("P10"));
 		System.out.println("\n");
 		
 		System.out.println("Find Process:");

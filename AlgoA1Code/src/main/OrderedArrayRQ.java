@@ -34,8 +34,6 @@ public class OrderedArrayRQ implements Runqueue {
 		// Sort the array
 		orderedArray = sortArray(orderedArray);
 
-		System.out.println("added " + procLabel);
-
 		if (index >= length) {
 			// Increase array size
 			orderedArray = IncreaseArraySize(orderedArray);
@@ -89,10 +87,8 @@ public class OrderedArrayRQ implements Runqueue {
 
 		orderedArray = tempArray;
 
-		System.out.println("Dequeued");
-
 		index--;
-		return ""; 
+		return null; 
 	} // end of dequeue()
 
 	
@@ -112,7 +108,7 @@ public class OrderedArrayRQ implements Runqueue {
 	
 	@Override
 	public boolean removeProcess(String procLabel) {
-		int removed = 0;
+		int removed = -1;
 		for(int i = 0; i < index; i++) {
 			if(orderedArray[i].getProcLabel().matches(procLabel)) {
 				orderedArray[i] = null;
@@ -120,18 +116,24 @@ public class OrderedArrayRQ implements Runqueue {
 			}
 		}
 		
-		Proc tempArray[] = new Proc[index];
-		for(int i = 0; i < removed; i++) {
-			tempArray[i] = orderedArray[i];
+		if(removed != -1) {
+			Proc tempArray[] = new Proc[index];
+			for(int i = 0; i < removed; i++) {
+				tempArray[i] = orderedArray[i];
+			}
+			
+			for(int i = removed+1; i < index-1; i++) {
+				tempArray[i] = orderedArray[i+1];
+			}
+			
+			orderedArray = tempArray;
+			
+			index--;
+			
+			return true;
 		}
 		
-		for(int i = removed+1; i < index-1; i++) {
-			tempArray[i] = orderedArray[i+1];
-		}
 		
-		orderedArray = tempArray;
-		
-		index--;
 		return false;
 	} // end of removeProcess()
 
