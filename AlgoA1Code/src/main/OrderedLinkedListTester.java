@@ -13,13 +13,11 @@ public class OrderedLinkedListTester {
 		linked.enqueue("P3", 1);
 		linked.enqueue("P4", 4);
 		linked.enqueue("P5", 1);
-		linked.printAll();
 		System.out.println("\n");
 		
 		
 		System.out.println("Dequeue:");
 		linked.dequeue();
-		linked.printAll();
 		System.out.println("\n");
 		
 		
@@ -32,7 +30,6 @@ public class OrderedLinkedListTester {
 		System.out.println("Remove Process:");
 		System.out.println("Removing P4: " + linked.removeProcess("P4"));
 		System.out.println("Removing P10: " + linked.removeProcess("P10"));
-		linked.printAll();
 		System.out.println("\n");
 		
 		

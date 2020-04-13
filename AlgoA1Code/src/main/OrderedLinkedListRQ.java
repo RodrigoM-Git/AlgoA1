@@ -69,33 +69,45 @@ public class OrderedLinkedListRQ implements Runqueue {
 		return null;
 	} // end of dequeue()
 
+	
 	@Override
 	public boolean findProcess(String procLabel) {
 		
+		//set current node
 		Node current = head;
 		
+		
+		//iterate through nodes until match is found
 		for(int i = 0; i < size; i++) {
 			if(current.getProcess().getProcLabel().matches(procLabel)) {
 				return true;
 			}
+			
+			//iterate to next node
 			current = current.getNext();
 		}
 
 		return false; // placeholder, modify this
 	} // end of findProcess()
 
+	
 	@Override
 	public boolean removeProcess(String procLabel) {
 		
+		//set current and before nodes
 		Node current = head;
 		Node before = new Node(null);
 		
+		
+		//iterate through nodes until match is found
 		for(int i = 0; i < size; i++) {
 			if(current.getProcess().getProcLabel().matches(procLabel)) {
+				//point node before to node next and remove current
 				before.setNext(current.getNext());
 				size--;
 				return true;
 			}else {
+				//iterate to next node
 				before = current;
 				current = current.getNext();
 			}
@@ -104,16 +116,21 @@ public class OrderedLinkedListRQ implements Runqueue {
 		return false;
 	} // End of removeProcess()
 
+	
 	@Override
 	public int precedingProcessTime(String procLabel) {
 		
+		//set current node and time
 		Node current = head;
 		int time = 0;
 		
+		//iterate through nodes
 		for(int i = 0; i < size; i++) {
 			if(current.getProcess().getProcLabel().matches(procLabel)) {
+				//stop adding time when node is found
 				return time;
 			}else {
+				//if node not yet found add time and iterate to next node
 				time += current.getProcess().getvRuntime();
 				current = current.getNext();
 			}
@@ -122,15 +139,19 @@ public class OrderedLinkedListRQ implements Runqueue {
 		return -1; 
 	} // end of precedingProcessTime()
 
+	
 	@Override
 	public int succeedingProcessTime(String procLabel) {
 		
+		//set index, time, and current node
 		Node current = head;
 		int index = 0;
 		int time = 0;
 		
+		//iterate through nodes until match is found
 		for(int i = 0; i < size; i++) {
 			if(current.getProcess().getProcLabel().matches(procLabel)) {
+				//when match is found, iterate through remaining nodes and add time
 				current = current.getNext();
 				for(int j = index+1; j < size; j++) {
 					time += current.getProcess().getvRuntime();
@@ -138,6 +159,7 @@ public class OrderedLinkedListRQ implements Runqueue {
 				}
 				return time;
 			}else {
+				//if no match yet, iterate to next node
 				current = current.getNext();
 				index++;
 			}
@@ -146,6 +168,7 @@ public class OrderedLinkedListRQ implements Runqueue {
 		return -1; // placeholder, modify this
 	} // end of precedingProcessTime()
 
+	
 	@Override
 	public void printAllProcesses(PrintWriter os) {
 		Node current = head;
@@ -158,17 +181,9 @@ public class OrderedLinkedListRQ implements Runqueue {
 
 	} // end of printAllProcess()
 
-	public void printAll() {
-		String string = "";
-		Node curr = head;
-		for (int i = 0; i < size; i++) {
-			string += curr.getProcess().getProcLabel() + " ";
-			curr = curr.getNext();
-		}
-		System.out.println(string);
-	}
-
 } // end of class OrderedLinkedListRQ
+
+
 
 //Node class for LinkedList Nodes
 class Node {
