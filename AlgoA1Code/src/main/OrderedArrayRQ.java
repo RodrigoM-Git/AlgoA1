@@ -70,7 +70,6 @@ public class OrderedArrayRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-    	orderedArray[0] = null;
 
         return ""; // placeholder,modify this
     } // end of dequeue()
