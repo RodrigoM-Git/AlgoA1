@@ -40,7 +40,6 @@ public class OrderedArrayRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-    	orderedArray[orderedArray.length-1] = null;
 
         return ""; // placeholder,modify this
     } // end of dequeue()
