@@ -30,17 +30,47 @@ public class OrderedArrayRQ implements Runqueue {
         Proc proc = new Proc(procLabel, vt);
         orderedArray[index] = proc;
         index++;
+        //Sort the array
+        orderedArray = sortArray(orderedArray);
         
         if(index >= length) {
-        	//increase size of array I'm too stupid rn cause i didn't do milestone 4 like Winston did
+        	//Increase array size
+        	orderedArray = IncreaseArraySize(orderedArray);
+        	//Change to new length
+        	length = orderedArray.length;
         }
 
     } // end of enqueue()
-
+    
+    public Proc[] IncreaseArraySize(Proc[] initialArray) {
+    	//Increase length of array
+    	int new_length = initialArray.length * 2;
+    	Proc[] newArray = new Proc[new_length];
+    	
+    	//Populate new Array with old array values
+    	for(int i=0;i<initialArray.length;i++) {
+    		newArray[i] = initialArray[i];
+    	}
+    	return newArray;
+    }
+    
+    public Proc[] sortArray(Proc[] orderedArray) {
+    	//Using bubblesort
+    	for(int i=0;i<orderedArray.length-1;i++) {
+    		for(int j=0;j<orderedArray.length-i-1;j++) {
+    			if(orderedArray[j].getvRuntime() > orderedArray[j+1].getvRuntime()) {
+    				Proc temp = orderedArray[j];
+    				orderedArray[j] = orderedArray[j+1];
+    				orderedArray[j+1] = temp;
+    			}
+    		}
+    	}
+    	return orderedArray;
+    }
 
     @Override
     public String dequeue() {
-    	orderedArray[orderedArray.length-1] = null;
+    	orderedArray[0] = null;
 
         return ""; // placeholder,modify this
     } // end of dequeue()
@@ -48,8 +78,13 @@ public class OrderedArrayRQ implements Runqueue {
 
     @Override
     public boolean findProcess(String procLabel){
-        // Implement me
-
+    	//Find if process exist by procLabel
+        for(int i=0;i<orderedArray.length;i++) {
+        	if((orderedArray[i].getProcLabel()).matches(procLabel)) {
+        		return true;
+        	}
+        }
+        
         return false; // placeholder, modify this
     } // end of findProcess()
 
