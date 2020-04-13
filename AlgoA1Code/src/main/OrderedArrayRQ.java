@@ -14,13 +14,13 @@ import java.lang.String;
 public class OrderedArrayRQ implements Runqueue {
 
 	Proc orderedArray[];
-	int initialLength = 20;
+	int length = 20;
 	int index = 0;
     /**
      * Constructs empty queue
      */
     public OrderedArrayRQ() {
-    	orderedArray = new Proc[initialLength];
+    	orderedArray = new Proc[length];
 
     }  // end of OrderedArrayRQ()
 
@@ -31,7 +31,7 @@ public class OrderedArrayRQ implements Runqueue {
         orderedArray[index] = proc;
         index++;
         
-        if(index >= initialLength) {
+        if(index >= length) {
         	//increase size of array I'm too stupid rn cause i didn't do milestone 4 like Winston did
         }
 
@@ -40,7 +40,7 @@ public class OrderedArrayRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-        // Implement me
+    	orderedArray[orderedArray.length-1] = null;
 
         return ""; // placeholder,modify this
     } // end of dequeue()
