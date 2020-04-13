@@ -183,35 +183,10 @@ public class OrderedArrayRQ implements Runqueue {
 	@Override
 	public void printAllProcesses(PrintWriter os) {
 		for(int i=0;i<index;i++) {
-			os.print(orderedArray[i].getProcLabel());
-			os.print(" ");
+			os.print(orderedArray[i].getProcLabel() + " ");
 		}
 		os.println();
 
 	} // end of printAllProcesses()
-
-	
-	
-	/*
-	 *
-	 * TEMP METHODS DELETE AFTER FINISHED
-	 * 
-	 * */
-	public void printAll() {
-		String result = "";
-		for (int i = 0; i < orderedArray.length; i++) {
-			if (orderedArray[i] != null) {
-				result += orderedArray[i].getProcLabel() + " ";
-			}
-
-		}
-
-		System.out.println(result);
-
-	}
-	
-	public int getIndex() {
-		return this.index;
-	}
 
 } // end of class OrderedArrayRQ

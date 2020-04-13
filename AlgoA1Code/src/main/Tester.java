@@ -13,20 +13,14 @@ public class Tester {
 		oarq.enqueue("P3", 2);
 		oarq.enqueue("P4", 4);
 		oarq.enqueue("P5", 1);
-		oarq.printAll();
-		System.out.println(oarq.getIndex());
 		System.out.println("\n");
 		
 		System.out.println("Dequeue:");
 		oarq.dequeue();
-		oarq.printAll();
-		System.out.println(oarq.getIndex());
 		System.out.println("\n");
 		
 		System.out.println("Remove Process:");
 		oarq.removeProcess("P1");
-		oarq.printAll();
-		System.out.println(oarq.getIndex());
 		System.out.println("\n");
 		
 		System.out.println("Find Process:");
@@ -47,7 +41,8 @@ public class Tester {
 		System.out.println("\n");
 		
 		System.out.println("Print All Processes:");
-		System.out.println(oarq.printAllProcesses(this));
+		PrintWriter os = new PrintWriter(System.out, true);
+		oarq.printAllProcesses(os);
 
 	}
 
