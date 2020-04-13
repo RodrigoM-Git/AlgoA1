@@ -30,10 +30,9 @@ public class Tester {
 		System.out.println("\n");
 		
 		System.out.println("Find Process:");
-		System.out.println(oarq.findProcess("P1"));
-		System.out.println(oarq.findProcess("P4"));
+		System.out.println("Finding process P1: " + oarq.findProcess("P1"));
+		System.out.println("Finding process P4: " + oarq.findProcess("P4"));
 		System.out.println("\n");
-		
 		
 		System.out.println("Preceding Process Time:");
 		System.out.println(oarq.precedingProcessTime("P6"));
