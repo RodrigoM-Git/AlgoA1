@@ -70,7 +70,14 @@ public class OrderedArrayRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-
+    	
+    	orderedArray[0] = null;
+    	
+    	for(int i = orderedArray.length-1; i > 1; i--) {
+    		orderedArray[i+1] = orderedArray[i];
+    	}
+    	
+    	index--;
         return ""; // placeholder,modify this
     } // end of dequeue()
 
