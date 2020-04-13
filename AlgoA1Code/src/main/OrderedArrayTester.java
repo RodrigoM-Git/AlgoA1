@@ -2,7 +2,7 @@ package main;
 
 import java.io.PrintWriter;
 
-public class Tester {
+public class OrderedArrayTester {
 
 	public static void main(String[] args) {
 		OrderedArrayRQ oarq = new OrderedArrayRQ();
