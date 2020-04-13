@@ -14,7 +14,6 @@ import java.lang.String;
 public class OrderedLinkedListRQ implements Runqueue {
 
 	private Node head;
-	private Node tail;
 	private int size = 0;
 
 	/**
