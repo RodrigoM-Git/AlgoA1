@@ -25,6 +25,7 @@ public class OrderedArrayRQ implements Runqueue {
 
 	} // end of OrderedArrayRQ()
 
+	
 	@Override
 	public void enqueue(String procLabel, int vt) {
 		Proc proc = new Proc(procLabel, vt);
@@ -44,6 +45,7 @@ public class OrderedArrayRQ implements Runqueue {
 
 	} // end of enqueue()
 
+	
 	public Proc[] IncreaseArraySize(Proc[] initialArray) {
 		// Increase length of array
 		int new_length = initialArray.length * 2;
@@ -56,6 +58,7 @@ public class OrderedArrayRQ implements Runqueue {
 		return newArray;
 	}
 
+	
 	public Proc[] sortArray(Proc[] orderedArray) {
 		// Using bubblesort
 		for (int i = 0; i < index - 1; i++) {
@@ -72,6 +75,7 @@ public class OrderedArrayRQ implements Runqueue {
 		return orderedArray;
 	}
 
+	
 	@Override
 	public String dequeue() {
 
@@ -88,9 +92,10 @@ public class OrderedArrayRQ implements Runqueue {
 		System.out.println("Dequeued");
 
 		index--;
-		return ""; // placeholder,modify this
+		return ""; 
 	} // end of dequeue()
 
+	
 	@Override
 	public boolean findProcess(String procLabel) {
 		// Find if process exist by procLabel
@@ -99,33 +104,82 @@ public class OrderedArrayRQ implements Runqueue {
 			if ((orderedArray[i].getProcLabel()).matches(procLabel)) {
 				return true;
 			}
-
 		}
 
-		return false; // placeholder, modify this
+		return false; 
 	} // end of findProcess()
 
+	
 	@Override
 	public boolean removeProcess(String procLabel) {
-		// Implement me
-
-		return false; // placeholder, modify this
+		int removed = 0;
+		for(int i = 0; i < index; i++) {
+			if(orderedArray[i].getProcLabel().matches(procLabel)) {
+				orderedArray[i] = null;
+				removed = i;
+			}
+		}
+		
+		Proc tempArray[] = new Proc[index];
+		for(int i = 0; i < removed; i++) {
+			tempArray[i] = orderedArray[i];
+		}
+		
+		for(int i = removed+1; i < index-1; i++) {
+			tempArray[i] = orderedArray[i+1];
+		}
+		
+		orderedArray = tempArray;
+		
+		index--;
+		return false;
 	} // end of removeProcess()
 
+	
 	@Override
 	public int precedingProcessTime(String procLabel) {
-		// Implement me
+		int current = -1;
+		int time = -1;
+		
+		for(int i = 0; i < index; i++) {
+			if(orderedArray[i].getProcLabel().matches(procLabel)) {
+				current = i;
+			}
+		}
+		
+		if(current != -1) {
+			time = 0;
+			for(int i = 0; i < current; i++) {
+				time += orderedArray[i].getvRuntime();
+			}
+		}
 
-		return -1; // placeholder, modify this
+		return time;
 	}// end of precedingProcessTime()
 
+	
 	@Override
 	public int succeedingProcessTime(String procLabel) {
-		// Implement me
+		int current = -1;
+		int time = -1;
+		
+		for(int i = 0; i < index; i++) {
+			if(orderedArray[i].getProcLabel().matches(procLabel)) {
+				current = i;
+			}
+		}
+		
+		if(current != -1) {
+			time = 0;
+			for(int i = current+1; i < index; i++) {
+				time += orderedArray[i].getvRuntime();
+			}
+		}
 
-		return -1; // placeholder, modify this
+		return time;
 	} // end of precedingProcessTime()
 
+	
 	@Override
 	public void printAllProcesses(PrintWriter os) {
 		// Implement me
