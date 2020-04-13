@@ -15,6 +15,7 @@ public class OrderedLinkedListRQ implements Runqueue {
 	
 	private Node head;
 	private Node tail;
+	private int size = 0;
 	
     /**
      * Constructs empty linked list
@@ -25,15 +26,80 @@ public class OrderedLinkedListRQ implements Runqueue {
 
     }  // end of OrderedLinkedList()
 
-
     @Override
     public void enqueue(String procLabel, int vt) {
+    	//create process
     	Proc process = new Proc(procLabel, vt);
-    	if(head == null) {
+    	
+    	//if list is empty, make it the head
+    	if(head.getProcess() == null) {
     		head = new Node(process);
+    		size++;
     	}else {
+    		//Create nodes for iteration
     		Node node = new Node(process);
-    		head.setNext(node);
+    		Node next = head;
+    		Node before = new Node(null);
+    		
+    		//go through whole list
+    		while(next != null) {
+    			
+    			//if new node is smaller than next
+    			if(node.getProcess().getvRuntime() <= next.getProcess().getvRuntime()) {
+    				
+    				//if new node is smaller than head node
+    				if(next == head) {
+    					
+    					//set new node as head, set head as next after new node
+    					node.setNext(head);
+    					head = node;
+    					
+    					//if only head in list
+    					if(size == 1) {
+    						tail = node.getNext();
+    					}
+    					size++;
+    					break;
+    				}else{
+    					
+    					//if only head in list
+    					if(size == 1) {
+    						head.setNext(node);
+    						tail = node;
+    						size++;
+    						break;
+    					}
+    					
+    					//set new node as next for previous node, and set next node as next
+    					before.setNext(node);
+    					node.setNext(next);
+    					size++;
+    					break;
+    				}
+    			}else {
+    				
+    				//make next node the before node, and make the node after next the new next node
+    				before = next;
+    				next = next.getNext();
+    			}
+    			
+    			if(size >= 2) {
+    				if(tail.getProcess().getvRuntime() <= node.getProcess().getvRuntime()) {
+        				Node temp = tail;
+        				temp.setNext(node);
+        				tail = node;
+        				size++;
+        				break;
+        			}
+    			}
+    			
+    		}
+    		
+    		
+    		
+    		
+    		
+    		
     	}
     	
 
@@ -85,6 +151,17 @@ public class OrderedLinkedListRQ implements Runqueue {
         //Implement me
 
     } // end of printAllProcess()
+    
+    
+    public void printAll() {
+    	String string = "";
+    	Node curr = head;
+    	for(int i = 0; i < size; i++) {
+    		string += curr.getProcess().getProcLabel() + " ";
+    		curr = curr.getNext();
+    	}
+    	System.out.println(string);
+    }
 
 } // end of class OrderedLinkedListRQ
 
