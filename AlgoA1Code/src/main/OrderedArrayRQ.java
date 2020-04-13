@@ -182,7 +182,11 @@ public class OrderedArrayRQ implements Runqueue {
 	
 	@Override
 	public void printAllProcesses(PrintWriter os) {
-		// Implement me
+		for(int i=0;i<index;i++) {
+			os.print(orderedArray[i].getProcLabel());
+			os.print(" ");
+		}
+		os.println();
 
 	} // end of printAllProcesses()
 

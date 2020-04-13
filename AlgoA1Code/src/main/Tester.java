@@ -48,7 +48,7 @@ public class Tester {
 		System.out.println("\n");
 		
 		System.out.println("Print All Processes:");
-		System.out.println("TO BE IMPLEMENTED BY WINSTON");
+		System.out.println(oarq.printAllProcesses(this));
 
 	}
 
