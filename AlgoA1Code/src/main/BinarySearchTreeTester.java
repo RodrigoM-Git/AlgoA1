@@ -34,14 +34,16 @@ public class BinarySearchTreeTester {
 		System.out.println("Remove Process:");
 		System.out.println("REMOVING P3: " + binary.removeProcess("P3"));
 		System.out.println("REMOVING P5: " + binary.removeProcess("P5"));
+		System.out.println("REMOVING P1: " + binary.removeProcess("P1"));
 		System.out.println("REMOVING P10: " + binary.removeProcess("P10"));
 		binary.printAll();
 		System.out.println("\n");
 		
 		
+		System.out.println(binary.succeedingProcessTime("P6"));
 		
-
-
+		
+		
 	}
 
 }
