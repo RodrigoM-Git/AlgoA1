@@ -61,7 +61,6 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-    	//implement me
 
         return ""; // placeholder, modify this
     } // end of dequeue()
