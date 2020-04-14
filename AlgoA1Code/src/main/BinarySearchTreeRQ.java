@@ -68,8 +68,22 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public String dequeue() {
-
-        return ""; // placeholder, modify this
+    	
+    	BinaryNode current = root;
+    	BinaryNode before = root;
+    	
+    	while(current.getLeft() != null) {
+    		before = current;
+    		current = current.getLeft();
+    	}
+    	
+    	if(current.getRight() == null) {
+    		before.setLeft(null);
+    	}else {
+    		before.setLeft(current.getRight());
+    	}
+    	
+        return null;
     } // end of dequeue()
 
 
@@ -102,9 +116,9 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public boolean removeProcess(String procLabel) {
-        // Implement me
-
-        return false; // placeholder, modify this
+    	//implement me
+    	
+        return false; 
     } // end of removeProcess()
 
 
