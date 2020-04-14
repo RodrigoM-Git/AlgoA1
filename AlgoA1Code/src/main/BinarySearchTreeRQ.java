@@ -28,27 +28,34 @@ public class BinarySearchTreeRQ implements Runqueue {
     public void enqueue(String procLabel, int vt) {
         Proc process = new Proc(procLabel, vt);
         BinaryNode node = new BinaryNode(process);
-        
+        //if no root
         if(root.getProcess() == null) {
+        	//new node becomes root
         	root = node;
         }else {
+        	//temporary storer
         	BinaryNode current = root;
         	BinaryNode before;
         	
         	while(true) {
+        		//set before to the current node
         		before = current;
-        		
+        		//if runtime of new node is less than current node
         		if(node.getProcess().getvRuntime() < current.getProcess().getvRuntime()) {
+        			//go left of the current node
         			current = current.getLeft();
-        			
+        			//if the left of the current node is null
         			if(current == null) {
+        				//set new node to the left of the current node
         				before.setLeft(node);
         				return;
         			}
         		}else {
+        			//move to the right of current node
         			current = current.getRight();
-        			
+        			//if null
         			if(current == null) {
+        				//set new node to right node
         				before.setRight(node);
         				return;
         			}
@@ -68,10 +75,29 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public boolean findProcess(String procLabel) {
-        //implement me
-
-        return false; // placeholder, modify this
+    	return iterateNode(root,procLabel);
     } // end of findProcess()
+    
+    public boolean iterateNode(BinaryNode node,String procLabel) {
+    	//if node procLabel matches
+    	if(node.getProcess().getProcLabel().matches(procLabel)) {
+    		return true;
+    	}
+    	//if left node not null
+    	if(node.getLeft() != null) {
+    		//recursion to iterate through the left node
+    		if (iterateNode(node.getLeft(),procLabel) == true) {
+    			return true;
+    		}
+    	}
+    	if(node.getRight() != null) {
+    		//recursion to iterate through the right node
+    		if(iterateNode(node.getRight(),procLabel) == true) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     
 
     @Override
