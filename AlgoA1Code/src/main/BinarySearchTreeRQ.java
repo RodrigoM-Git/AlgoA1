@@ -116,10 +116,104 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public boolean removeProcess(String procLabel) {
-    	//implement me
     	
-        return false; 
+    	BinaryNode current = root;
+    	BinaryNode before = root;
+    	boolean isLeft = true;
+    	
+    	while(!current.getProcess().getProcLabel().matches(procLabel)) {
+    		before = current;
+    		
+    		if(current.getLeft() != null) {
+    			if(iterateNode(current.getLeft(), procLabel)) {
+    				isLeft = true;
+    				current = current.getLeft();
+    			}else {
+    				isLeft = false;
+    				current = current.getRight();
+    			}
+    			
+    			if(current == null) {
+    				return false;
+    			}
+    		}
+    		
+    		if(current.getRight() != null) {
+    			if(iterateNode(current.getRight(), procLabel)) {
+    				isLeft = false;
+    				current = current.getRight();
+    			}else {
+    				isLeft = true;
+    				current = current.getLeft();
+    			}
+    		}
+    		
+    		if(current == null) {
+    			return false;
+    		}	
+    	}
+    	
+    	if(current.getLeft() == null && current.getRight() == null) {
+    		if(current == root) {
+    			root = null;
+    		}else if(isLeft) {
+    			before.setLeft(null);
+    		}else {
+    			before.setRight(null);
+    		}
+    	}else if(current.getRight() == null) {
+    		if(current == root) {
+    			root = current.getLeft();
+    		}else if(isLeft) {
+    			before.setLeft(current.getLeft());
+    		}else {
+    			before.setRight(current.getLeft());
+    		}
+    	}else if(current.getLeft() == null) {
+    		if(current == root) {
+    			root = null;
+    		}else if(isLeft) {
+    			before.setLeft(current.getRight());
+    		}else {
+    			before.setRight(current.getRight());
+    		}
+    	}else {
+    		BinaryNode replacement = getReplacement(current);
+    		
+    		if(current == root) {
+    			root = replacement;
+    		}else if(isLeft) {
+    			before.setLeft(replacement);
+    		}else {
+    			before.setRight(replacement);
+    		}
+    		
+    		replacement.setLeft(current.getLeft());
+    	}
+    	
+        return true; 
     } // end of removeProcess()
+    
+    
+    public BinaryNode getReplacement(BinaryNode toReplace) {
+    	BinaryNode before = toReplace;
+    	BinaryNode replacement = toReplace;
+    	
+    	BinaryNode current = toReplace.getRight();
+    	
+    	while(current != null) {
+    		before = replacement;
+    		replacement = current;
+    		current = current.getLeft();
+    	}
+    	
+    	if(replacement != toReplace.getRight()) {
+    		before.setLeft(replacement.getRight());
+    		replacement.setRight(toReplace.getRight());
+    	}
+    	
+    	return replacement;
+    }
 
 
     @Override
