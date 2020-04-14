@@ -12,25 +12,56 @@ import java.lang.String;
  */
 public class BinarySearchTreeRQ implements Runqueue {
 
+	private BinaryNode root;
+	
+	
     /**
      * Constructs empty queue
      */
     public BinarySearchTreeRQ() {
-        // Implement Me
+        root = new BinaryNode(null);
 
     }  // end of BinarySearchTreeRQ()
 
 
     @Override
     public void enqueue(String procLabel, int vt) {
-        // Implement me
+        Proc process = new Proc(procLabel, vt);
+        BinaryNode node = new BinaryNode(process);
+        
+        if(root.getProcess() == null) {
+        	root = node;
+        }else {
+        	BinaryNode current = root;
+        	BinaryNode before;
+        	
+        	while(true) {
+        		before = current;
+        		
+        		if(node.getProcess().getvRuntime() < current.getProcess().getvRuntime()) {
+        			current = current.getLeft();
+        			
+        			if(current == null) {
+        				before.setLeft(node);
+        				return;
+        			}
+        		}else {
+        			current = current.getRight();
+        			
+        			if(current == null) {
+        				before.setRight(node);
+        				return;
+        			}
+        		}
+        	}
+        }
 
     } // end of enqueue()
 
 
     @Override
     public String dequeue() {
-        // Implement me
+    	//implement me
 
         return ""; // placeholder, modify this
     } // end of dequeue()
@@ -38,11 +69,11 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public boolean findProcess(String procLabel) {
-        // Implement me
+        //implement me
 
         return false; // placeholder, modify this
     } // end of findProcess()
-
+    
 
     @Override
     public boolean removeProcess(String procLabel) {
@@ -70,8 +101,60 @@ public class BinarySearchTreeRQ implements Runqueue {
 
     @Override
     public void printAllProcesses(PrintWriter os) {
-        // Implement me
+       //implement me
 
     } // end of printAllProcess()
+    
+    
+    
+    //METHODS TO REMOVE
+  public void iterateInOrder(BinaryNode current) {
+    	
+    	if(current != null) {
+    		iterateInOrder(current.getLeft());
+    		System.out.println(current.getProcess().getProcLabel());
+    		iterateInOrder(current.getRight());
+    	}
+    }
+
+    public void printAll() {
+    	iterateInOrder(root);
+    }
 
 } // end of class BinarySearchTreeRQ
+
+
+
+//Node class for BinarySearchTree Nodes
+class BinaryNode {
+	private Proc process;
+	private BinaryNode rightNode;
+	private BinaryNode leftNode;
+
+	public BinaryNode(Proc process) {
+		this.process = process;
+		this.rightNode = null;
+		this.leftNode = null;
+	}
+
+	public Proc getProcess() {
+		return this.process;
+	}
+
+	public BinaryNode getLeft() {
+		return this.leftNode;
+	}
+	
+	public BinaryNode getRight() {
+		return this.rightNode;
+	}
+
+	public void setLeft(BinaryNode leftNode) {
+		this.leftNode = leftNode;
+	}
+	
+	public void setRight(BinaryNode rightNode) {
+		this.rightNode = rightNode;
+	}
+}// end of Node class
+
