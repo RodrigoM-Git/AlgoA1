@@ -136,9 +136,7 @@ public class BinarySearchTreeRQ implements Runqueue {
     			if(current == null) {
     				return false;
     			}
-    		}
-    		
-    		if(current.getRight() != null) {
+    		}else if(current.getRight() != null) {
     			if(iterateNode(current.getRight(), procLabel)) {
     				isLeft = false;
     				current = current.getRight();
