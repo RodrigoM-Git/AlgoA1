@@ -121,9 +121,11 @@ public class BinarySearchTreeRQ implements Runqueue {
     	BinaryNode before = root;
     	boolean isLeft = true;
     	
+    	//while not at target node
     	while(!current.getProcess().getProcLabel().matches(procLabel)) {
     		before = current;
     		
+    		//look to left until no more left
     		if(current.getLeft() != null) {
     			if(iterateNode(current.getLeft(), procLabel)) {
     				isLeft = true;
@@ -136,6 +138,8 @@ public class BinarySearchTreeRQ implements Runqueue {
     			if(current == null) {
     				return false;
     			}
+    			
+    			//look to right until no more right
     		}else if(current.getRight() != null) {
     			if(iterateNode(current.getRight(), procLabel)) {
     				isLeft = false;
@@ -146,11 +150,15 @@ public class BinarySearchTreeRQ implements Runqueue {
     			}
     		}
     		
+    		
+    		//if not in tree then return false
     		if(current == null) {
     			return false;
     		}	
     	}
     	
+    	
+    	//if found node has no children
     	if(current.getLeft() == null && current.getRight() == null) {
     		if(current == root) {
     			root = null;
@@ -159,6 +167,8 @@ public class BinarySearchTreeRQ implements Runqueue {
     		}else {
     			before.setRight(null);
     		}
+    		
+    		//if found node has no right child
     	}else if(current.getRight() == null) {
     		if(current == root) {
     			root = current.getLeft();
@@ -167,6 +177,8 @@ public class BinarySearchTreeRQ implements Runqueue {
     		}else {
     			before.setRight(current.getLeft());
     		}
+    		
+    		//if found node has no left child
     	}else if(current.getLeft() == null) {
     		if(current == root) {
     			root = null;
@@ -175,6 +187,8 @@ public class BinarySearchTreeRQ implements Runqueue {
     		}else {
     			before.setRight(current.getRight());
     		}
+    		
+    		//if found node has 2 children
     	}else {
     		BinaryNode replacement = getReplacement(current);
     		
@@ -193,19 +207,25 @@ public class BinarySearchTreeRQ implements Runqueue {
     } // end of removeProcess()
     
     
+    
+    //method to get node that replaces removed node
     public BinaryNode getReplacement(BinaryNode toReplace) {
     	BinaryNode before = toReplace;
     	BinaryNode replacement = toReplace;
     	
     	BinaryNode current = toReplace.getRight();
     	
+    	//iterates left until the end
     	while(current != null) {
     		before = replacement;
     		replacement = current;
     		current = current.getLeft();
     	}
     	
+    	//if the replacement node isnt the right child of removed node
     	if(replacement != toReplace.getRight()) {
+    		
+    		//replace removed node with replacement node
     		before.setLeft(replacement.getRight());
     		replacement.setRight(toReplace.getRight());
     	}
