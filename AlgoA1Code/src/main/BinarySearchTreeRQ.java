@@ -110,46 +110,61 @@ public class BinarySearchTreeRQ implements Runqueue {
 		}
 		return false;
 	}
+	//Find current node that contains proc label
+	public BinaryNode findNode(BinaryNode node, String procLabel) {
+		// if node procLabel matches
+		if (node.getProcess().getProcLabel().matches(procLabel)) {
+			return node;
+		}
+		// if left node not null
+		if (node.getLeft() != null) {
+			// recursion to iterate through the left node
+			if (findNode(node.getLeft(), procLabel) != null) {
+				return findNode(node.getLeft(), procLabel);
+			}
+		}
+		if (node.getRight() != null) {
+			// recursion to iterate through the right node
+			if (findNode(node.getRight(), procLabel) != null) {
+				return findNode(node.getRight(), procLabel);
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public boolean removeProcess(String procLabel) {
 
 		BinaryNode current = root;
 		BinaryNode before = root;
+		BinaryNode step = root;
 		boolean isLeft = true;
 
-		// while not at target node
-		while (!current.getProcess().getProcLabel().matches(procLabel)) {
-			before = current;
-
-			// look to left until no more left
-			if (current.getLeft() != null) {
-				if (iterateNode(current.getLeft(), procLabel)) {
-					isLeft = true;
-					current = current.getLeft();
-				} else {
-					isLeft = false;
-					current = current.getRight();
-				}
-
-				// if not in tree then return false
-				if (current == null) {
-					return false;
-				}
-
-				// look to right until no more right
-			} else if (current.getRight() != null) {
-				if (iterateNode(current.getRight(), procLabel)) {
-					isLeft = false;
-					current = current.getRight();
-				} else {
-					isLeft = true;
-					current = current.getLeft();
-				}
-
-				// if not in tree then return false
-				if (current == null) {
-					return false;
+		// check if procLabel exist
+		if(iterateNode(root,procLabel) != true) {
+			return false;
+		}else {
+			//get the current node
+			current = findNode(root,procLabel);
+			System.out.println("Current:" +current.getProcess().getProcLabel());
+			//the new step is not eequal to current
+			while(step != current) {
+				//search for before
+				//if its lest than the run time of root
+				if(current.getProcess().getvRuntime() < root.getProcess().getvRuntime()) {
+					//search the left
+					if(step.getLeft() != null) {
+						before = step;
+						step = step.getLeft();
+						isLeft = true;
+					}
+				}else {
+					//search the right
+					if(step.getRight() != null) {
+						before = step;
+						step = step.getRight();
+						isLeft = false;
+					}
 				}
 			}
 		}
