@@ -19,7 +19,7 @@ public class BinarySearchTreeTester {
 		
 		
 		System.out.println("Dequeue:");
-		binary.dequeue();
+		//binary.dequeue();
 		binary.printAll();
 		System.out.println("\n");
 		
