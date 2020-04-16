@@ -122,25 +122,29 @@ public class BinarySearchTreeRQ implements Runqueue {
 		return false;
 	}
 	//Find current node that contains proc label
-	public BinaryNode findNode(BinaryNode node, String procLabel) {
-		// if node procLabel matches
-		if (node.getProcess().getProcLabel().matches(procLabel)) {
-			return node;
-		}
+	public BinaryNode findNode(BinaryNode root, String procLabel) {
 		// if left node not null
-		if (node.getLeft() != null) {
-			// recursion to iterate through the left node
-			if (findNode(node.getLeft(), procLabel) != null) {
-				return findNode(node.getLeft(), procLabel);
-			}
-		}
-		if (node.getRight() != null) {
+
+		if (root == null) {
 			// recursion to iterate through the right node
-			if (findNode(node.getRight(), procLabel) != null) {
-				return findNode(node.getRight(), procLabel);
-			}
+			return null;
+		}
+		// if node procLabel matches
+		if (root.getProcess().getProcLabel().matches(procLabel)) {
+			return root;
+		}
+		BinaryNode leftNode = findNode(root.getLeft(),procLabel);
+		//return the node from left node
+		if(leftNode != null) {
+			return leftNode;
+		}
+		BinaryNode rightNode = findNode(root.getRight(),procLabel);
+		//return the node from right node
+		if(rightNode != null) {
+			return rightNode;
 		}
 		return null;
+		
 	}
 
 	@Override
@@ -260,7 +264,6 @@ public class BinarySearchTreeRQ implements Runqueue {
 		}else {
 			//Target Node
 			BinaryNode procNode = findNode(root,procLabel);
-			BinaryNode current = root;
 			//if target node is root
 			if(procNode == root) {
 				//get all vRuntime of its left subtree
@@ -280,12 +283,11 @@ public class BinarySearchTreeRQ implements Runqueue {
 		int vRunTimeAcc = 0;
 			if(root.getLeft() != null) {
 				//get the runtime of left subtree
-				if (inorderTraversal(root.getLeft(),target) != 0) {
-					vRunTimeAcc += inorderTraversal(root.getLeft(),target);
-				}
+				vRunTimeAcc += inorderTraversal(root.getLeft(),target);
 			}
 			//add the runtime of current node
 			if(root.getProcess().getvRuntime() <= target.getProcess().getvRuntime()) {
+				//if not target
 				if(root == target) {
 					return vRunTimeAcc;
 				}else {
@@ -295,25 +297,21 @@ public class BinarySearchTreeRQ implements Runqueue {
 			}
 			if (root.getRight() != null) {
 				//get runtime of right subtree
-				if (inorderTraversal(root.getRight(),target) != 0) {
-					vRunTimeAcc += inorderTraversal(root.getRight(),target);
+				vRunTimeAcc += inorderTraversal(root.getRight(),target);
 				}
-			}
 			
 		return vRunTimeAcc;
 	}
-	
-	
+
+
 	public int getAllVrunTime(BinaryNode root) {
 		int vRunTimeAcc = 0;
 		if (root != null) {
-			if(getAllVrunTime(root.getLeft()) != 0){
-				vRunTimeAcc += getAllVrunTime(root.getLeft());
-			}
+			vRunTimeAcc += getAllVrunTime(root.getLeft());
+			
 			vRunTimeAcc += root.getProcess().getvRuntime();
-			if(getAllVrunTime(root.getRight()) != 0) {
-				vRunTimeAcc += getAllVrunTime(root.getRight());
-			}
+			
+			vRunTimeAcc += getAllVrunTime(root.getRight());
 		}
 		return vRunTimeAcc;
 	}

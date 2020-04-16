@@ -6,7 +6,7 @@ public class BinarySearchTreeTester {
 
 	public static void main(String[] args) {
 		BinarySearchTreeRQ binary = new BinarySearchTreeRQ();
-		
+		PrintWriter os = new PrintWriter(System.out,true);
 		
 		System.out.println("Enqueue:");
 		binary.enqueue("P1", 4);
@@ -37,7 +37,7 @@ public class BinarySearchTreeTester {
 		System.out.println("REMOVING P7: " + binary.removeProcess("P7"));
 		System.out.println("REMOVING P10: " + binary.removeProcess("P10"));
 		System.out.println("\n");
-		
+		binary.printAllProcesses(os);
 		
 		System.out.println("Preceeding Process Time:");
 		System.out.println(binary.precedingProcessTime("P4"));
@@ -56,7 +56,6 @@ public class BinarySearchTreeTester {
 		
 		
 		System.out.println("Print All Processes:");
-		PrintWriter os = new PrintWriter(System.out, true);
 		binary.printAllProcesses(os);
 		
 		
