@@ -262,6 +262,8 @@ public class BinarySearchTreeRQ implements Runqueue {
 
 		return vRunTimeAcc; // placeholder, modify this
 	} // end of precedingProcessTime()
+	
+	
 	public int inorderTraversal(BinaryNode root, BinaryNode target) {
 		int vRunTimeAcc = 0;
 		if (root.getProcess().getvRuntime() < target.getProcess().getvRuntime()) {
@@ -280,6 +282,8 @@ public class BinarySearchTreeRQ implements Runqueue {
 		}
 		return vRunTimeAcc;
 	}
+	
+	
 	public int getAllVrunTime(BinaryNode root) {
 		int vRunTimeAcc = 0;
 		if (root != null) {
@@ -293,53 +297,14 @@ public class BinarySearchTreeRQ implements Runqueue {
 		}
 		return vRunTimeAcc;
 	}
+	
 
 	@Override
 	public int succeedingProcessTime(String procLabel) {
 
-		BinaryNode current = root;
-
-		while (true) {
-			if(current.getProcess().getProcLabel().matches(procLabel)) {
-				break;
-			}else if (current.getLeft() != null) {
-				if (iterateNode(current.getLeft(), procLabel)) {
-					current = current.getLeft();
-				} else {
-					current = current.getRight();
-				}
-
-				// if not in tree then return false
-				if (current == null) {
-					break;
-				}
-
-				// look to right until no more right
-			} else if (current.getRight() != null) {
-				if (iterateNode(current.getRight(), procLabel)) {
-					current = current.getRight();
-				} else {
-					current = current.getLeft();
-				}
-
-				// if not in tree then return false
-				if (current == null) {
-					break;
-				}
-			}
-
-			if (current.getProcess().getProcLabel().matches(procLabel)) {
-				break;
-			}
-		}
-
-		if(current != null) {
-		
-		}
 		return -1;
 
 	} // end of succeededProcessTime()
-	
 	
 
 	@Override
