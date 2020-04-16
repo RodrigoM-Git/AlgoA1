@@ -49,7 +49,7 @@ public class OrderedLinkedListRQ implements Runqueue {
 		
 		//while there is a next, and while current < new node, iterate to next until new < current
 		while(current.getNext().getProcess() != null && current.getNext().getProcess().getvRuntime()
-				< newNode.getProcess().getvRuntime()) {
+				<= newNode.getProcess().getvRuntime()) {
 			current = current.getNext();
 		}
 		
@@ -63,10 +63,11 @@ public class OrderedLinkedListRQ implements Runqueue {
 
 	@Override
 	public String dequeue() {
+		String procLabel = head.getProcess().getProcLabel();
 		head = head.getNext();
 		size--;
 
-		return null;
+		return procLabel;
 	} // end of dequeue()
 
 	

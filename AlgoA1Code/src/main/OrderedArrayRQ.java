@@ -14,7 +14,7 @@ import java.lang.String;
 public class OrderedArrayRQ implements Runqueue {
 
 	private Proc orderedArray[];
-	private int length = 1;
+	private int length = 10;
 	private int index = 0;
 
 	/**
@@ -76,19 +76,28 @@ public class OrderedArrayRQ implements Runqueue {
 	
 	@Override
 	public String dequeue() {
-
+		
+		String procLabel = orderedArray[0].getProcLabel();
 		orderedArray[0] = null;
+		Proc[] tempArray;
 
-		Proc[] tempArray = new Proc[index];
+		if(index < length) {
+			tempArray = new Proc[length];
+		}else {
+			tempArray = new Proc[length * 2];
+		}
+		
 
 		for (int i = 1; i < index; i++) {
+			if(orderedArray[i] != null)
 			tempArray[i - 1] = orderedArray[i];
 		}
 
 		orderedArray = tempArray;
 
 		index--;
-		return null; 
+		
+		return procLabel; 
 	} // end of dequeue()
 
 	
@@ -117,18 +126,19 @@ public class OrderedArrayRQ implements Runqueue {
 		}
 		
 		if(removed != -1) {
-			Proc tempArray[] = new Proc[index];
+			Proc tempArray[] = new Proc[length];
 			for(int i = 0; i < removed; i++) {
 				tempArray[i] = orderedArray[i];
 			}
 			
-			for(int i = removed+1; i < index-1; i++) {
-				tempArray[i] = orderedArray[i+1];
+			for(int i = removed+1; i < index; i++) {
+				tempArray[i-1] = orderedArray[i];
 			}
 			
 			orderedArray = tempArray;
 			
 			index--;
+			
 			
 			return true;
 		}
@@ -144,9 +154,11 @@ public class OrderedArrayRQ implements Runqueue {
 		int time = -1;
 		
 		for(int i = 0; i < index; i++) {
-			if(orderedArray[i].getProcLabel().matches(procLabel)) {
-				current = i;
-			}
+			if(orderedArray[i] != null) {
+				if(orderedArray[i].getProcLabel().matches(procLabel)) {
+					current = i;
+				}
+			}	
 		}
 		
 		if(current != -1) {
@@ -166,8 +178,10 @@ public class OrderedArrayRQ implements Runqueue {
 		int time = -1;
 		
 		for(int i = 0; i < index; i++) {
-			if(orderedArray[i].getProcLabel().matches(procLabel)) {
-				current = i;
+			if(orderedArray[i] != null) {
+				if(orderedArray[i].getProcLabel().matches(procLabel)) {
+					current = i;
+				}
 			}
 		}
 		
@@ -185,7 +199,9 @@ public class OrderedArrayRQ implements Runqueue {
 	@Override
 	public void printAllProcesses(PrintWriter os) {
 		for(int i=0;i<index;i++) {
-			os.print(orderedArray[i].getProcLabel() + " ");
+			if(orderedArray[i] != null) {
+				os.print(orderedArray[i].getProcLabel() + " ");
+			}
 		}
 		os.println();
 

@@ -70,19 +70,30 @@ public class BinarySearchTreeRQ implements Runqueue {
 
 		BinaryNode current = root;
 		BinaryNode before = root;
+		String procLabel = null;
 
 		while (current.getLeft() != null) {
 			before = current;
 			current = current.getLeft();
 		}
-
-		if (current.getRight() == null) {
-			before.setLeft(null);
-		} else {
-			before.setLeft(current.getRight());
+		
+		procLabel = current.getProcess().getProcLabel();
+		
+		if(current == root) {
+			if(current.getRight() == null) {
+				root = null;
+			}else {
+				root = current.getRight();
+			}
+		}else {
+			if (current.getRight() == null) {
+				before.setLeft(null);
+			} else {
+				before.setLeft(current.getRight());
+			}
 		}
 
-		return null;
+		return procLabel;
 	} // end of dequeue()
 
 	@Override
@@ -146,7 +157,6 @@ public class BinarySearchTreeRQ implements Runqueue {
 		}else {
 			//get the current node
 			current = findNode(root,procLabel);
-			System.out.println("Current:" +current.getProcess().getProcLabel());
 			//the new step is not eequal to current
 			while(step != current) {
 				//search for before
@@ -275,8 +285,13 @@ public class BinarySearchTreeRQ implements Runqueue {
 				}
 			}
 			//add the runtime of current node
-			if(root.getProcess().getvRuntime() < target.getProcess().getvRuntime()) {
-				vRunTimeAcc += root.getProcess().getvRuntime();
+			if(root.getProcess().getvRuntime() <= target.getProcess().getvRuntime()) {
+				if(root == target) {
+					return vRunTimeAcc;
+				}else {
+					vRunTimeAcc += root.getProcess().getvRuntime();
+				}
+				
 			}
 			if (root.getRight() != null) {
 				//get runtime of right subtree
