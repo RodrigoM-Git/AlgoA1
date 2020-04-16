@@ -306,31 +306,33 @@ public class BinarySearchTreeRQ implements Runqueue {
 
 	@Override
 	public int succeedingProcessTime(String procLabel) {
-
-		return -1;
-
+		int vRunTimeAcc = 0;
+		
+		if(iterateNode(root,procLabel) != true) {
+			return -1;
+		}else {
+			BinaryNode procNode = findNode(root,procLabel);
+			vRunTimeAcc += getAllVrunTime(root);
+			vRunTimeAcc -= precedingProcessTime(procLabel);
+			vRunTimeAcc -= procNode.getProcess().getvRuntime();
+		}
+		return vRunTimeAcc; 
 	} // end of succeededProcessTime()
 	
 
 	@Override
 	public void printAllProcesses(PrintWriter os) {
-		// implement me
-
+		iterateInOrder(root, os);
+		os.println();
 	} // end of printAllProcess()
 
-	// METHODS TO REMOVE
-	public void iterateInOrder(BinaryNode current) {
-
-		if (current != null) {
-			iterateInOrder(current.getLeft());
-			System.out.println(current.getProcess().getProcLabel());
-			iterateInOrder(current.getRight());
+	
+	public void iterateInOrder(BinaryNode current, PrintWriter os) {
+		if(current != null) {
+			iterateInOrder(current.getLeft(), os);
+			os.print(current.getProcess().getProcLabel() + " ");
+			iterateInOrder(current.getRight(), os);
 		}
-	}
-
-	public void printAll() {
-		iterateInOrder(root);
-		System.out.println("Root: " + root.getProcess().getProcLabel());
 	}
 
 } // end of class BinarySearchTreeRQ

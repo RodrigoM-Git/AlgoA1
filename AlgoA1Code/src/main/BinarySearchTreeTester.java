@@ -1,5 +1,7 @@
 package main;
 
+import java.io.PrintWriter;
+
 public class BinarySearchTreeTester {
 
 	public static void main(String[] args) {
@@ -9,18 +11,16 @@ public class BinarySearchTreeTester {
 		System.out.println("Enqueue:");
 		binary.enqueue("P1", 4);
 		binary.enqueue("P2", 1);
-		binary.enqueue("P3", 5);
+		binary.enqueue("P3", 3);
 		binary.enqueue("P4", 2);
 		binary.enqueue("P5", 6);
 		binary.enqueue("P6", 7);
 		binary.enqueue("P7", 9);
-		binary.printAll();
 		System.out.println("\n");
 		
 		
 		System.out.println("Dequeue:");
-		//binary.dequeue();
-		binary.printAll();
+		binary.dequeue();
 		System.out.println("\n");
 		
 		
@@ -36,7 +36,6 @@ public class BinarySearchTreeTester {
 		System.out.println("REMOVING P5: " + binary.removeProcess("P5"));
 		System.out.println("REMOVING P7: " + binary.removeProcess("P7"));
 		System.out.println("REMOVING P10: " + binary.removeProcess("P10"));
-		binary.printAll();
 		System.out.println("\n");
 		
 		
@@ -46,6 +45,19 @@ public class BinarySearchTreeTester {
 		System.out.println(binary.precedingProcessTime("P6"));
 		System.out.println(binary.precedingProcessTime("P10"));
 		System.out.println("\n");
+		
+		
+		System.out.println("Suceeding Process Time:");
+		System.out.println(binary.succeedingProcessTime("P4"));
+		System.out.println(binary.succeedingProcessTime("P1"));
+		System.out.println(binary.succeedingProcessTime("P6"));
+		System.out.println(binary.succeedingProcessTime("P10"));
+		System.out.println("\n");
+		
+		
+		System.out.println("Print All Processes:");
+		PrintWriter os = new PrintWriter(System.out, true);
+		binary.printAllProcesses(os);
 		
 		
 	}
